@@ -44,7 +44,7 @@ def PreProcess(dirname, filename, var_amount=3):
 ############################
 ###### モデルの構築 #########
 ############################
-def BuildCNN(ipshape=(32, 32, 3), num_classes=3):
+def BuildCNN(ipshape=(16, 16, 3), num_classes=3):
 
     model = Sequential()
 
@@ -100,8 +100,8 @@ def Learning(tsnum=30, nb_epoch=50, batch_size=8, learn_schedule=0.9):
 
         target += 1
     
-    X_TRAIN = np.arry(X_TRAIN_list + X_TEST_list)  # 連結(学習するデータは後ろに連結)
-    Y_TRAIN = np.arry(Y_TRAIN_list + Y_TEST_list)  # 連結（同上）
+    X_TRAIN = np.array(X_TRAIN_list + X_TEST_list)  # 連結(学習するデータは後ろに連結)
+    Y_TRAIN = np.array(Y_TRAIN_list + Y_TEST_list)  # 連結（同上）
     print(">> 学習サンプル数：", X_TRAIN.shape)
     y_train = np_utils.to_categorical(Y_TRAIN, target)  # 自然数をベクトルに変換(学習のしやすさのため)
     valrate = tsnum * target * 1.0 / X_TRAIN.shape[0]   # tsnum枚を精度確認用にする計算式
