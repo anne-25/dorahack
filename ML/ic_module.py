@@ -125,7 +125,7 @@ class Schedule(object):
 # 学習準備
 lrs = LearningRateScheduler(get_schedule_func(0.001))           # 学習率変換関数
 mcp = ModelCheckpoint(filepath='best.hdf5', monitor='val_loss', verbose=1, save_best_only=True, mode='auto')  # val_lossが学習途中で最も小さくなる度に重みを保存する関数
-model = BuildCNN(ipshape=(X_TRAIN.shape[1], X_TRAIN.shape[2], X_TRAIN.shape[3]), num_classes=target)          # modelは構築した学習モデル
+model = BuildCNN(ipshape=(X_TRAIN.shape[1], X_TRAIN.shape[2]), num_classes=target)          # modelは構築した学習モデル
 
 # 学習
 print(">> 学習開始")
