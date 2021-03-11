@@ -55,7 +55,7 @@ def BuildCNN(ipshape=(32, 32, 3), num_classes=3):
     # 層2
     model.add(Conv2D(48, 3)) # 畳み込み処理48回
     model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(2,2))) # pool_size(2×2)の中の最大値を出力
+    model.add(MaxPool2D(pool_size=(2,2))) # pool_size(2×2)の中の最大値を出力
     model.add(Dropout(0.5)) # 過学習防止(入力の50%を0に置き換え)
 
     # 層3　層4
@@ -64,7 +64,7 @@ def BuildCNN(ipshape=(32, 32, 3), num_classes=3):
 
     model.add(Conv2D(96, 3))
     model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(MaxPool2D(pool_size=(2, 2)))
     model.add(Dropout(0.5))
 
     # 層5
