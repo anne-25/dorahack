@@ -86,7 +86,7 @@ def BuildCNN(ipshape=(32, 32, 3), num_classes=3):
 #########################
 ######### 学習 ##########
 #########################
-def Learnig(tsnum=30, nb_epoch=50, batch_size=8, learn_schedule=0.9):
+def Learning(tsnum=30, nb_epoch=50, batch_size=8, learn_schedule=0.9):
     # データの整理
     X_TRAIN_list = []; Y_TRAIN_list = []; X_TEST_list = []; Y_TEST_list = [];
     target = 0
