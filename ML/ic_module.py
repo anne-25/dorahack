@@ -44,7 +44,7 @@ def PreProcess(dirname, filename, var_amount=3):
 ############################
 ###### モデルの構築 #########
 ############################
-def BuildCNN(ipshape=(16, 16, 3), num_classes=3):
+def BuildCNN(ipshape=(32, 32, 3), num_classes=3):
 
     model = Sequential()
 
@@ -125,7 +125,7 @@ def Learning(tsnum=30, nb_epoch=50, batch_size=8, learn_schedule=0.9):
     # 学習準備
     lrs = LearningRateScheduler(get_schedule_func(0.001))           # 学習率変換関数
     mcp = ModelCheckpoint(filepath='best.hdf5', monitor='val_loss', verbose=1, save_best_only=True, mode='auto')  # val_lossが学習途中で最も小さくなる度に重みを保存する関数
-    model = BuildCNN(ipshape=(X_TRAIN.shape[1], X_TRAIN.shape[2]), num_classes=target)          # modelは構築した学習モデル
+    model = BuildCNN(ipshape=(X_TRAIN.shape[1], X_TRAIN.shape[2], X_TRAIN.shape[3]), num_classes=target)          # modelは構築した学習モデル
 
     # 学習
     print(">> 学習開始")
