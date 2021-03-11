@@ -4,7 +4,7 @@ import numpy as np
 from keras.preprocessing.image import load_img, img_to_array, array_to_img
 from keras.preprocessing.image import random_rotation, random_shift, random_zoom
 from keras.layers.convolutional import Conv2D
-from keras.layers.pooling import MaxPoolinging2D
+from keras.layers.pooling import MaxPooling2D
 from keras.layers.core import Activation
 from keras.layers.core import Dense
 from keras.layers.core import Dropout
@@ -69,7 +69,7 @@ def BuildCNN(ipshape=(32, 32, 3), num_classes=3):
     model.add(Dropout(0.5))
 
     # 層5
-    mdoel.add(Flatten()) # Flatten()とDense(128)で要素128個の一次元配列へ
+    model.add(Flatten()) # Flatten()とDense(128)で要素128個の一次元配列へ
     model.add(Dense(128))
     model.add(Activation('relu'))
     model.add(Dropout(0.5))
@@ -138,16 +138,16 @@ def Learning(tsnum=30, nb_epoch=50, batch_size=8, learn_schedule=0.9):
                      callbacks=[lrs, mcp])      # callbacksは学習中に利用する関数
 
     # 保存
-    json_string = mdoel.to_json()  # 学習モデルはjsonの形式で保存
+    json_string = model.to_json()  # 学習モデルはjsonの形式で保存
     json_string += '##########' + str(ClassNames)  # jsonはテキストなので画像の分類名も付記して保存
-    open('model.json' + 'w').write(json_string)    
+    open('model.json', 'w').write(json_string)    
     model.save_weights('last.hdf5')
                                                    # 重みもsave_weightsで保存
 
 # 試行・実験
 def TestProcess(imgname):
     # 読み込み
-    modelname_test = open("model.json").read()
+    modelname_text = open("model.json").read()
     json_strings = modelname_text.split('##########')
     textlist = json_strings[1].replace("[", "").replace("]", "").replace("\'", "").split()
     model = model_from_json(json_strings[0])        # josn形式からモデルを読み込む
