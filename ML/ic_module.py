@@ -110,38 +110,38 @@ def Learnig(tsnum=30, nb_epoch=50, batch_size=8, learn_schedule=0.9):
 # initが最初の学習率
 # lrが計算後つまり現在適用すべき学習率
 # 学習が進むにつれ重みを収束しやすくする
-class Schedule(object):
-    def __init__(self, init=0.001):    # 初期定義
-        self.init = init
-    def __call__(self, epoch):         # 現在値計算
-        lr = self.init
-        for i in range(1, epoch+1):
-            lr *= learn_schedule
-        return lr
+    class Schedule(object):
+        def __init__(self, init=0.001):    # 初期定義
+            self.init = init
+        def __call__(self, epoch):         # 現在値計算
+            lr = self.init
+            for i in range(1, epoch+1):
+                lr *= learn_schedule
+            return lr
 
-def get_schedule_func(init):
-    return Schedule(init)
+    def get_schedule_func(init):
+        return Schedule(init)
 
-# 学習準備
-lrs = LearningRateScheduler(get_schedule_func(0.001))           # 学習率変換関数
-mcp = ModelCheckpoint(filepath='best.hdf5', monitor='val_loss', verbose=1, save_best_only=True, mode='auto')  # val_lossが学習途中で最も小さくなる度に重みを保存する関数
-model = BuildCNN(ipshape=(X_TRAIN.shape[1], X_TRAIN.shape[2]), num_classes=target)          # modelは構築した学習モデル
+    # 学習準備
+    lrs = LearningRateScheduler(get_schedule_func(0.001))           # 学習率変換関数
+    mcp = ModelCheckpoint(filepath='best.hdf5', monitor='val_loss', verbose=1, save_best_only=True, mode='auto')  # val_lossが学習途中で最も小さくなる度に重みを保存する関数
+    model = BuildCNN(ipshape=(X_TRAIN.shape[1], X_TRAIN.shape[2]), num_classes=target)          # modelは構築した学習モデル
 
-# 学習
-print(">> 学習開始")
-hist = model.fit(X_TRAIN, y_train,          # 学習はfit, 学習に使用するデータX_TRAIN,y_trainを指定
-                 batch_size=batch_size,     # batch_sizeは入力データをまとめて平均化する大きさ
-                 verbose=1,
-                 epochs=nb_epoch,           # epochsは学習の繰り返し回数
-                 validation_split=valrate,  # valrateは精度確認用データの割合
-                 callbacks=[lrs, mcp])      # callbacksは学習中に利用する関数
+    # 学習
+    print(">> 学習開始")
+    hist = model.fit(X_TRAIN, y_train,          # 学習はfit, 学習に使用するデータX_TRAIN,y_trainを指定
+                     batch_size=batch_size,     # batch_sizeは入力データをまとめて平均化する大きさ
+                     verbose=1,
+                     epochs=nb_epoch,           # epochsは学習の繰り返し回数
+                     validation_split=valrate,  # valrateは精度確認用データの割合
+                     callbacks=[lrs, mcp])      # callbacksは学習中に利用する関数
 
-# 保存
-json_string = mdoel.to_json()  # 学習モデルはjsonの形式で保存
-json_string += '##########' + str(ClassNames)  # jsonはテキストなので画像の分類名も付記して保存
-open('model.json' + 'w').write(json_string)    
-model.save_weights('last.hdf5')
-                                               # 重みもsave_weightsで保存
+    # 保存
+    json_string = mdoel.to_json()  # 学習モデルはjsonの形式で保存
+    json_string += '##########' + str(ClassNames)  # jsonはテキストなので画像の分類名も付記して保存
+    open('model.json' + 'w').write(json_string)    
+    model.save_weights('last.hdf5')
+                                                   # 重みもsave_weightsで保存
 
 # 試行・実験
 def TestProcess(imgname):
@@ -154,7 +154,7 @@ def TestProcess(imgname):
     img = load_img(imgname, target_size=(hw["height"], hw["width"])) # 画像読み込み
     TEST = img_to_array(img) / 255                                   # 画像の数値化
 
-# 画像分類
-pred = model.predict(np.array([TEST]), batch_size=1, verbose=0)  # predictで学習結果を用いた計算ができる
-print(">> 計算結果↓\n" + str(pred))
-print(">> この画像は「" + textlist[np.argmax(pred)].replace(",", "") + "」です。")
+    # 画像分類
+    pred = model.predict(np.array([TEST]), batch_size=1, verbose=0)  # predictで学習結果を用いた計算ができる
+    print(">> 計算結果↓\n" + str(pred))
+    print(">> この画像は「" + textlist[np.argmax(pred)].replace(",", "") + "」です。")
