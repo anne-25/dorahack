@@ -119,8 +119,8 @@ class Schedule(object):
             lr *= learn_schedule
         return lr
 
-    def get_schedule_func(init):
-        return Schedule(init)
+def get_schedule_func(init):
+    return Schedule(init)
 
 # 学習準備
 lrs = LearningRateScheduler(get_schedule_func(0.001))           # 学習率変換関数
