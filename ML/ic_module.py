@@ -90,7 +90,7 @@ def Learning(tsnum=30, nb_epoch=50, batch_size=8, learn_schedule=0.9):
     # データの整理
     X_TRAIN_list = []; Y_TRAIN_list = []; X_TEST_list = []; Y_TEST_list = [];
     target = 0
-    for filename in Filenames :
+    for filename in FileNames :
         data = np.load(filename)   # 画像のnumpyデータを読み込み
         trnum = data.shape[0] - tsnum
         X_TRAIN_list += [data[i] for i in range(trnum)]      # 画像データ
